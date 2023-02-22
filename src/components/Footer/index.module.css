@@ -1,0 +1,23 @@
+.container {
+  height: 7vh;
+  width: 100%;
+  top: 0;
+  background-color: aqua;
+  display: flex;
+  flex-direction: row;
+}
+.container .left {
+  background-color: red;
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 0;
+}
+.container .right {
+  background-color: green;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 50%;
+}
+/*# sourceMappingURL=index.module.css.map */

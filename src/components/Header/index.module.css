@@ -1,0 +1,34 @@
+.container {
+  height: 7vh;
+  width: 100%;
+  top: 0;
+  background-color: #3078a1;
+  display: flex;
+  flex-direction: row;
+}
+.container .left {
+  height: 100%;
+  width: 40%;
+  left: 0;
+}
+.container .right {
+  right: 0;
+  height: 100%;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
+.container .right .connect-wallet-btn {
+  width: 20%;
+  height: 65%;
+  border-radius: 1.5vh;
+  background-color: bisque;
+  margin: 0 2vw 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+/*# sourceMappingURL=index.module.css.map */
