@@ -24,13 +24,83 @@
   width: 43%;
   border: solid 5px #e1e0e0;
   border-radius: 3vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container .exchange-block .left .title,
+.container .exchange-block .right .title {
+  position: relative;
+  top: -5.5%;
+  text-align: center;
+  height: 3vh;
+  width: 70%;
+  background-color: #bacee0;
+  line-height: 3vh;
+  color: white;
+  font-size: large;
+}
+.container .exchange-block .left .connect-wallet {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.container .exchange-block .left .select-asset {
+  flex: 1;
+}
+.container .exchange-block .left .input-amount {
+  width: 100%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.container .exchange-block .left .input-amount .input-amount-tip {
+  flex: 1;
+}
+.container .exchange-block .left .input-amount .input-amount-input-wrapper {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .exchange-block .left .input-amount .input-amount-input-wrapper .input-amount-input {
+  width: 90%;
+  height: 100%;
+}
+.container .exchange-block .left .input-amount .input-amount-account-balance {
+  flex: 1;
+}
+.container .exchange-block .left .bottom-area {
+  width: 100%;
+  flex: 1;
+}
+.container .exchange-block .left .bottom-area .divide-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #3078a1;
+}
+.container .exchange-block .left .bottom-area .exchange-fee,
+.container .exchange-block .left .bottom-area .gas-fee {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .container .exchange-block .middle {
-  border-radius: 2vh;
-  width: 8%;
-  background-color: white;
   height: 10%;
+  width: 5%;
   position: absolute;
   top: 20%;
+}
+.container .exchange-block .middle .arrow-right {
+  width: 100%;
+}
+.container .exchange-block .launch-trans-btn {
+  width: 100%;
+  height: 10vh;
+  background-color: red;
+  position: absolute;
+  bottom: 10%;
 }
 /*# sourceMappingURL=index.module.css.map */
