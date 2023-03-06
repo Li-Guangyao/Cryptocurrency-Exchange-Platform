@@ -1,25 +1,54 @@
 .container {
-  height: 7vh;
+  height: 6vh;
   width: 100%;
-  top: 0;
-  background-color: aqua;
+  bottom: 0;
+  background-color: white;
+
 
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 
   .left {
-    background-color: red;
-    height: 100%;
-    width: 50%;
-    position: absolute;
-    left: 0;
+    display: flex;
+    flex-direction: row;
+
+    padding: 0 0 0 10%;
   }
 
   .right {
-    background-color: green;
-    position: absolute;
-    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+
     height: 100%;
-    width: 50%;
+
+    padding: 0 10% 0 0;
+
+    .text-item {
+      margin: 0 10px;
+
+      cursor: pointer;
+    }
+
+    .icon-wrapper {
+      height: 100%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .icon {
+        height: 70%;
+        margin: 0 5px;
+
+        cursor: pointer;
+      }
+    }
+
+
   }
 }

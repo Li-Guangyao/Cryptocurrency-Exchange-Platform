@@ -1,36 +1,47 @@
 .container {
   background-color: #7fadce;
-  height: 93vh;
+  height: 87vh;
   width: 100%;
   position: relative;
 }
-.container .exchange-block {
-  width: 65vw;
+.container .central-area {
+  width: 55vw;
   height: 60vh;
-  background-color: #bacee0;
-  border-radius: 3vh;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
+  background-color: #bacee0;
+  border-radius: 3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.container .central-area .exchange-block {
+  width: 100%;
+  height: 90%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
-.container .exchange-block .left,
-.container .exchange-block .right {
+.container .central-area .exchange-block .margin {
+  height: 7px;
+}
+.container .central-area .exchange-block .left,
+.container .central-area .exchange-block .right {
   height: 90%;
   width: 43%;
-  border: solid 5px #e1e0e0;
+  border: solid 5px #f5f5f5;
   border-radius: 3vh;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.container .exchange-block .left .title,
-.container .exchange-block .right .title {
+.container .central-area .exchange-block .left .title,
+.container .central-area .exchange-block .right .title {
   position: relative;
   top: -5.5%;
   text-align: center;
@@ -41,66 +52,102 @@
   color: white;
   font-size: large;
 }
-.container .exchange-block .left .connect-wallet {
+.container .central-area .exchange-block .left .connect-wallet,
+.container .central-area .exchange-block .right .connect-wallet {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-.container .exchange-block .left .select-asset {
-  flex: 1;
-}
-.container .exchange-block .left .input-amount {
   width: 100%;
-  flex: 2;
+  margin: 0 0 15px 0;
+}
+.container .central-area .exchange-block .left .connect-wallet .connect-wallet-select,
+.container .central-area .exchange-block .right .connect-wallet .connect-wallet-select {
+  width: 100%;
+}
+.container .central-area .exchange-block .left .connect-wallet .connect-wallet-btn-wrapper,
+.container .central-area .exchange-block .right .connect-wallet .connect-wallet-btn-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.container .central-area .exchange-block .left .connect-wallet .connect-wallet-btn-wrapper .connect-wallet-btn,
+.container .central-area .exchange-block .right .connect-wallet .connect-wallet-btn-wrapper .connect-wallet-btn {
+  width: 48%;
+  overflow: hidden;
+}
+.container .central-area .exchange-block .left .select-asset,
+.container .central-area .exchange-block .right .select-asset {
+  flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
-.container .exchange-block .left .input-amount .input-amount-tip {
+.container .central-area .exchange-block .left .input-amount,
+.container .central-area .exchange-block .right .input-amount {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 15px 0;
+}
+.container .central-area .exchange-block .left .input-amount .input-amount-tip,
+.container .central-area .exchange-block .right .input-amount .input-amount-tip {
   flex: 1;
 }
-.container .exchange-block .left .input-amount .input-amount-input-wrapper {
+.container .central-area .exchange-block .left .input-amount .input-amount-input-wrapper,
+.container .central-area .exchange-block .right .input-amount .input-amount-input-wrapper {
   width: 100%;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container .exchange-block .left .input-amount .input-amount-input-wrapper .input-amount-input {
-  width: 90%;
+.container .central-area .exchange-block .left .input-amount .input-amount-input-wrapper .input-amount-input,
+.container .central-area .exchange-block .right .input-amount .input-amount-input-wrapper .input-amount-input {
+  width: 100%;
   height: 100%;
 }
-.container .exchange-block .left .input-amount .input-amount-account-balance {
+.container .central-area .exchange-block .left .input-amount .input-amount-account-balance,
+.container .central-area .exchange-block .right .input-amount .input-amount-account-balance {
   flex: 1;
 }
-.container .exchange-block .left .bottom-area {
+.container .central-area .exchange-block .left .bottom-area,
+.container .central-area .exchange-block .right .bottom-area {
   width: 100%;
   flex: 1;
 }
-.container .exchange-block .left .bottom-area .divide-bar {
+.container .central-area .exchange-block .left .bottom-area .divide-bar,
+.container .central-area .exchange-block .right .bottom-area .divide-bar {
   width: 100%;
-  height: 10px;
+  height: 5px;
   background-color: #3078a1;
+  border-radius: 3px;
 }
-.container .exchange-block .left .bottom-area .exchange-fee,
-.container .exchange-block .left .bottom-area .gas-fee {
+.container .central-area .exchange-block .left .bottom-area .exchange-fee,
+.container .central-area .exchange-block .right .bottom-area .exchange-fee,
+.container .central-area .exchange-block .left .bottom-area .gas-fee,
+.container .central-area .exchange-block .right .bottom-area .gas-fee {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.container .exchange-block .middle {
+.container .central-area .exchange-block .middle {
   height: 10%;
   width: 5%;
   position: absolute;
   top: 20%;
 }
-.container .exchange-block .middle .arrow-right {
+.container .central-area .exchange-block .middle .arrow-right {
   width: 100%;
 }
-.container .exchange-block .launch-trans-btn {
-  width: 100%;
-  height: 10vh;
-  background-color: red;
+.container .central-area .launch-trans-btn {
+  width: 93%;
+  height: 8%;
+  border-radius: 2vh;
   position: absolute;
-  bottom: 10%;
+  bottom: 4%;
+  background-color: #3683af;
+  color: white;
+  font-weight: bold;
 }
-/*# sourceMappingURL=index.module.css.map */
