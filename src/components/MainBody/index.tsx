@@ -1,23 +1,93 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import style from "./index.module.css";
 
-import { Select, Button, Input } from "antd";
+import {Select, Button, Input} from "antd";
 import "antd/dist/reset.css";
 
-enum Nettype {
-    Testnet,
-    Mainnet,
-    Betanet,
+import connectMetaMask from "../../utils/connectMetaMask";
+import connectAlgoSigner from "../../utils/connectAlgoSigner";
+
+// enum Nettype {
+//     Testnet,
+//     Mainnet,
+//     Betanet,
+// }
+
+const chainOptions = [{value: "0", label: "Ethereum"},
+    {value: "1", label: "Algorand"}]
+
+const currencyOptions = [{value: "Goerli", label: "Goerli"},
+    {value: "Algo", label: "Algo"}]
+
+export enum ConnectState {
+    Unconnected, Connected
 }
 
-const testnet = {
-    cryptocurrency: [],
-};
+const changeNumber = (e: string | number) => {
+    return (Number(e) + 1) % 2
+}
 
-const mainnet = {};
+export default function MainBody() {
+    const [sender, setSender] = useState("")
+    const [receiver, setReceiver] = useState("")
+    const [showInputForReceiver, setShowInputForReceiver] = useState(false)
+    const [exchangeAmount, setExchangeAmount] = useState(0) // from sender
 
-function MainBody() {
-    const launchTrans = () => {};
+    const launchTrans = () => {
+    };
+
+    const [currSelected, setCurrSelected] = useState(0)
+
+    const changeChain = (e: any, pos: string) => {
+        if (pos == 'left') {
+            setCurrSelected(Number(e))
+        } else if (pos == 'right') {
+            setCurrSelected(changeNumber(e))
+        }
+    }
+
+    const enterReceiver = () => {
+
+    }
+
+    const leftConnectWallet = () => {
+        if (currSelected == 0) {
+            let metaMask = new connectMetaMask()
+            metaMask.connect().then(r =>
+                console.log(r)
+            )
+        } else if (currSelected == 1) {
+            let algoSigner = new connectAlgoSigner();
+            algoSigner.connect().then(r => {
+                setSender(r)
+            });
+        }
+    }
+
+    const rightConnectWallet = () => {
+        if (currSelected == 1) {
+            let metaMask = new connectMetaMask()
+            metaMask.connect().then(r =>
+                console.log(r)
+            )
+        } else if (currSelected == 0) {
+            let algoSigner = new connectAlgoSigner();
+            algoSigner.connect().then(r => {
+                setReceiver(r)
+            });
+        }
+    }
+
+    const inputExchangeAmount = (side: String, e: any) => {
+        console.log(e)
+        // 需要测试是否为数值格式
+        let amount = e.target.defaultValue
+        if (side == 'left') {
+            setExchangeAmount(amount)
+        } else {
+            setExchangeAmount(e.target.defaultValue)
+        }
+    }
 
     return (
         <div className={style["container"]}>
@@ -27,24 +97,17 @@ function MainBody() {
                         <div className={style["title"]}>Source</div>
 
                         <div className={style["connect-wallet"]}>
-                            <Select
-                                className={style["connect-wallet-select"]}
-                                defaultValue="ETH"
-                                // onChange={handleChange}
-                                options={[
-                                    { value: "ETH", label: "ETH" },
-                                    { value: "lucy", label: "Lucy" },
-                                    { value: "Yiminghe", label: "yiminghe" },
-                                    {
-                                        value: "disabled",
-                                        label: "Disabled",
-                                        disabled: true,
-                                    },
-                                ]}
+                            <Select className={style["connect-wallet-select"]}
+                                    defaultValue={chainOptions[currSelected].label}
+                                    value={chainOptions[currSelected].label}
+                                    onSelect={(e) => {
+                                        changeChain(e, "left")
+                                    }}
+                                    options={chainOptions}
                             />
 
                             <div className={style["margin"]}></div>
-                            <Button className={style["connect-wallet-btn"]}>
+                            <Button className={style["connect-wallet-btn"]} onClick={leftConnectWallet}>
                                 CONNECT WALLET
                             </Button>
                         </div>
@@ -56,18 +119,9 @@ function MainBody() {
                             <div className={style["margin"]}></div>
 
                             <Select
-                                defaultValue="ETH"
-                                // onChange={handleChange}
-                                options={[
-                                    { value: "ETH", label: "ETH" },
-                                    { value: "lucy", label: "Lucy" },
-                                    { value: "Yiminghe", label: "yiminghe" },
-                                    {
-                                        value: "disabled",
-                                        label: "Disabled",
-                                        disabled: true,
-                                    },
-                                ]}
+                                defaultValue={currencyOptions[currSelected]}
+                                value={currencyOptions[currSelected]}
+                                options={currencyOptions}
                             />
                         </div>
 
@@ -80,6 +134,10 @@ function MainBody() {
                             >
                                 <Input
                                     className={style["input-amount-input"]}
+                                    placeholder={"0.00"}
+                                    onChange={(e) => {
+                                        inputExchangeAmount('left', e)
+                                    }}
                                 ></Input>
                             </div>
                             <div
@@ -120,31 +178,35 @@ function MainBody() {
                     <div className={style["right"]}>
                         <div className={style["title"]}>Destination</div>
                         <div className={style["connect-wallet"]}>
-                            <Select
-                                defaultValue="ETH"
-                                // onChange={handleChange}
-                                options={[
-                                    { value: "ETH", label: "ETH" },
-                                    { value: "lucy", label: "Lucy" },
-                                    { value: "Yiminghe", label: "yiminghe" },
-                                    {
-                                        value: "disabled",
-                                        label: "Disabled",
-                                        disabled: true,
-                                    },
-                                ]}
-                            />
+                            {showInputForReceiver ? <Input placeholder="Input Receiver Address"/>
+                                : <Select
+                                    defaultValue={chainOptions[changeNumber(currSelected)]}
+                                    value={chainOptions[changeNumber(currSelected)]}
+                                    onSelect={(e) => {
+                                        changeChain(e, "right")
+                                    }}
+                                    options={chainOptions}
+                                />
+                            }
                             <div className={style["margin"]}></div>
 
-                            <div
-                                className={style["connect-wallet-btn-wrapper"]}
-                            >
-                                <Button className={style["connect-wallet-btn"]}>
-                                    CONNECT WALLET
-                                </Button>
-                                <Button className={style["connect-wallet-btn"]}>
-                                    ENTER ADDRESS
-                                </Button>
+                            <div className={style["connect-wallet-btn-wrapper"]}>
+                                {showInputForReceiver ? <Button className={style["connect-wallet-btn"]}
+                                                                onClick={() => {
+                                                                    setShowInputForReceiver(!showInputForReceiver)
+                                                                }}>
+                                        Cancel address </Button>
+                                    :
+                                    <>
+                                        <Button className={style["connect-wallet-btn"]} onClick={rightConnectWallet}>
+                                            CONNECT WALLET
+                                        </Button>
+                                        <Button className={style["connect-wallet-btn"]} onClick={() => {
+                                            setShowInputForReceiver(!showInputForReceiver)
+                                        }}>
+                                            ENTER ADDRESS
+                                        </Button>
+                                    </>}
                             </div>
                         </div>
 
@@ -154,18 +216,9 @@ function MainBody() {
                             </div>
                             <div className={style["margin"]}></div>
                             <Select
-                                defaultValue="ETH"
-                                // onChange={handleChange}
-                                options={[
-                                    { value: "ETH", label: "ETH" },
-                                    { value: "lucy", label: "Lucy" },
-                                    { value: "Yiminghe", label: "yiminghe" },
-                                    {
-                                        value: "disabled",
-                                        label: "Disabled",
-                                        disabled: true,
-                                    },
-                                ]}
+                                defaultValue={currencyOptions[(Number(currSelected) + 1) % 2]}
+                                value={currencyOptions[(Number(currSelected) + 1) % 2]}
+                                options={currencyOptions}
                             />
                         </div>
 
@@ -178,7 +231,12 @@ function MainBody() {
                             >
                                 <Input
                                     className={style["input-amount-input"]}
-                                ></Input>
+                                    placeholder={"0.00"}
+                                    onInput={(e) => {
+                                        inputExchangeAmount('right', e)
+                                    }}
+                                >
+                                </Input>
                             </div>
                             <div
                                 className={
@@ -209,7 +267,7 @@ function MainBody() {
                 </Button>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
-export default MainBody;

@@ -73,8 +73,9 @@
 }
 .container .central-area .exchange-block .left .connect-wallet .connect-wallet-btn-wrapper .connect-wallet-btn,
 .container .central-area .exchange-block .right .connect-wallet .connect-wallet-btn-wrapper .connect-wallet-btn {
-  width: 48%;
+  flex-grow: 1;
   overflow: hidden;
+  padding: 2px;
 }
 .container .central-area .exchange-block .left .select-asset,
 .container .central-area .exchange-block .right .select-asset {
@@ -151,3 +152,4 @@
   color: white;
   font-weight: bold;
 }
+/*# sourceMappingURL=index.module.css.map */
