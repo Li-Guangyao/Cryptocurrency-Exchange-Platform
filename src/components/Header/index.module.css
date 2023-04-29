@@ -2,7 +2,7 @@
   height: 7vh;
   width: 100%;
   top: 0;
-  background-color: #3078a1;
+  background-color: #2b6d8f;
   display: flex;
   flex-direction: row;
 }
@@ -10,6 +10,89 @@
   height: 100%;
   width: 40%;
   left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+.container .left .logo {
+  font-size: xx-large;
+  color: white;
+  margin-left: 2vw;
+  cursor: pointer;
+}
+.container .left .options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+.container .left .options .option {
+  text-align: center;
+  margin: 0 0.5vw;
+  padding: 8px 2vw;
+  /*width: 48px;*/
+  height: var(--nav-height);
+  line-height: var(--nav-height);
+  font-family: main;
+  font-weight: bolder;
+  color: #b4b4b4;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+}
+.container .left .options .option:hover {
+  color: white;
+  transition: color 0.2s;
+}
+.container .left .options .option-selected {
+  color: white;
+  background-color: #e2b28e;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
+}
+.container .left .options .option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 100%;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  z-index: -2;
+}
+.container .left .options .option::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 100%;
+  width: 0;
+  border-radius: 30px;
+  background-color: #e2b28e;
+  z-index: -1;
+}
+.container .left .options .option:hover::after {
+  animation-name: option-hover;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes option-hover {
+  0% {
+    width: 20%;
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+    background-color: #e2b28e;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
+  }
 }
 .container .right {
   right: 0;
@@ -30,5 +113,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-size: large;
+  font-weight: bold;
+  color: #525252;
 }
 /*# sourceMappingURL=index.module.css.map */

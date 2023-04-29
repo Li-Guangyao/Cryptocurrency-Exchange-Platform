@@ -34,6 +34,7 @@ export default function MainBody() {
     const [exchangeAmount, setExchangeAmount] = useState(0) // from sender
 
     const launchTrans = () => {
+
     };
 
     const [currSelected, setCurrSelected] = useState(0)
@@ -44,10 +45,6 @@ export default function MainBody() {
         } else if (pos == 'right') {
             setCurrSelected(changeNumber(e))
         }
-    }
-
-    const enterReceiver = () => {
-
     }
 
     const leftConnectWallet = () => {
@@ -76,6 +73,12 @@ export default function MainBody() {
                 setReceiver(r)
             });
         }
+    }
+
+    const inputReceiver = (e: any) => {
+        let receiver = e.target.defaultValue
+        // 需要校验地址的格式是否正确
+        setReceiver(receiver)
     }
 
     const inputExchangeAmount = (side: String, e: any) => {
@@ -178,7 +181,11 @@ export default function MainBody() {
                     <div className={style["right"]}>
                         <div className={style["title"]}>Destination</div>
                         <div className={style["connect-wallet"]}>
-                            {showInputForReceiver ? <Input placeholder="Input Receiver Address"/>
+                            {showInputForReceiver ? <Input placeholder="Input Receiver Address" onInput={(e) => {
+                                    inputReceiver(e)
+                                }
+                                }/>
+
                                 : <Select
                                     defaultValue={chainOptions[changeNumber(currSelected)]}
                                     value={chainOptions[changeNumber(currSelected)]}
@@ -216,8 +223,8 @@ export default function MainBody() {
                             </div>
                             <div className={style["margin"]}></div>
                             <Select
-                                defaultValue={currencyOptions[(Number(currSelected) + 1) % 2]}
-                                value={currencyOptions[(Number(currSelected) + 1) % 2]}
+                                defaultValue={currencyOptions[changeNumber(currSelected)]}
+                                value={currencyOptions[changeNumber(currSelected)]}
                                 options={currencyOptions}
                             />
                         </div>

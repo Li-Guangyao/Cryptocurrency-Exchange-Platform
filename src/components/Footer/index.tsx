@@ -5,7 +5,7 @@ function Footer() {
     return (
         <div className={style["container"]}>
             <div className={style["left"]}>
-                © 2023 Created independently by&nbsp;
+                Rocket Exchange © 2023 Developed independently by&nbsp;
                 <a href="http://39.99.133.150">Li Guangyao</a>
             </div>
             <div className={style["right"]}>

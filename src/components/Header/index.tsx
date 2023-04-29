@@ -1,13 +1,26 @@
 /*global AlgoSigner*/
 
-import React, { useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import style from "./index.module.css";
-import { ethers } from "ethers";
+import {ethers} from "ethers";
+import {useLocation, useNavigate} from "react-router-dom";
 
 // import algosdk from 'algosdk';
 
+const NavItems = [
+    {name: "BUY ALGO", path: "/buy"},
+    {name: "ALGO&ETH", path: "/ETH"},
+    {name: "ALGO&BTC", path: "/BTC"},
+]
+
+
 function Header() {
+    const location = useLocation();
+    const path = location.pathname;
+
+    const navigate = useNavigate();
+
     const ConnectWallet = async () => {
         let signer = null;
 
@@ -44,12 +57,25 @@ function Header() {
         console.log(userAccount);
     };
 
+
     return (
         <div className={style["container"]}>
-            <div className={style["left"]}>
-                <div className={style["intro"]}></div>
-                <div className={style["docs"]}></div>
+            <div className={style['left']}>
+                <div className={style['logo']}>Rocket Exchange
+                </div>
+                <div className={style['options']}>
+                    {
+                        NavItems.map((navItem, i) => {
+                            let className = path == navItem.path ? style['option'] + " " + style['option-selected'] : style['option'];
+                            return <div className={className} onClick={() => {
+                                navigate(navItem.path)
+                            }}>{navItem.name}
+                            </div>
+                        })
+                    }
+                </div>
             </div>
+
             <div className={style["right"]}>
                 <div className={style["address"]}>{}</div>
                 <div className={style["net-sign"]}></div>
