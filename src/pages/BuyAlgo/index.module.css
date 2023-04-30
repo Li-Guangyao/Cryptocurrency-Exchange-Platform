@@ -1,8 +1,82 @@
 .container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -65%);
+  height: 50vh;
+  width: 50vw;
+}
+.container .left {
+  display: flex;
+  flex-direction: column;
+  margin: 0 5vw 0 0;
+}
+.container .left .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .left .title .logo-algorand {
+  width: 80px;
+}
+.container .left .title .title-algorand {
+  margin: 0 0 0 20px;
+  font-weight: bolder;
+  font-size: 60px;
+}
+.container .left .price {
+  display: flex;
+  justify-content: right;
+  flex-direction: column;
+  align-items: end;
+}
+.container .left .price .price-item {
+  display: flex;
+  align-items: end;
+  margin: 1vh 0;
+  font-size: xxx-large;
+  font-weight: bolder;
+}
+.container .left .price .price-item .price-item-tip {
+  margin: 0 0 0 10px;
+  font-size: xx-large;
+}
+.container .left .price .price-time-item {
+  font-size: medium;
+  color: #676767;
+}
+.container .right {
+  padding: 10px;
+}
+.container .right .title {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.container .right .price {
+  width: 100%;
+}
+.container .right .price .price-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  font-weight: bold;
+}
+.container .right .price .price-item .number-input {
+  width: 80%;
+  height: 40px;
+  margin: 0 10px 0 0;
+}
+.container .right .price .up-down-arrow {
+  margin: 5px 40%;
+}
+.container .right .buy-btn {
+  margin: 15px 0;
+  width: 100%;
+  font-weight: bold;
 }
 /*# sourceMappingURL=index.module.css.map */

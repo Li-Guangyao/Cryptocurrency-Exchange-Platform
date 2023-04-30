@@ -1,23 +1,107 @@
 .container {
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -55%);
+  transform: translate(-50%, -65%);
+
+  height: 50vh;
+  width: 50vw;
+  //border: 1px solid black;
+
 
   .left {
+    display: flex;
+    flex-direction: column;
+    margin: 0 5vw 0 0;
+
     .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       .logo-algorand {
+        width: 80px;
+
       }
 
       .title-algorand {
+        margin: 0 0 0 20px;
+        font-weight: bolder;
+        font-size: 60px;
+      }
+    }
 
+    .price {
+      display: flex;
+      justify-content: right;
+      flex-direction: column;
+      align-items: end;
+
+      .price-item {
+        display: flex;
+        align-items: end;
+        margin: 1vh 0;
+
+        font-size: xxx-large;
+        font-weight: bolder;
+
+        .price-item-tip {
+          margin: 0 0 0 10px;
+          font-size: xx-large;
+        }
+      }
+
+      .price-time-item {
+        font-size: medium;
+        color: #676767;
       }
     }
   }
 
   .right {
+    padding: 10px;
+
+    .title {
+      font-size: x-large;
+      font-weight: bold;
+
+      margin: 10px 0;
+    }
+
+    .price {
+      width: 100%;
+
+      .price-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: large;
+        font-weight: bold;
+
+        .number-input {
+          width: 80%;
+          height: 40px;
+          margin: 0 10px 0 0;
+
+
+        }
+      }
+
+      .up-down-arrow {
+        margin: 5px 40%;
+      }
+    }
+
+    .buy-btn {
+      margin: 15px 0;
+      width: 100%;
+      font-weight: bold;
+    }
 
   }
 }
