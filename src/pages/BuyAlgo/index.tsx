@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import style from "./index.module.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {InputNumber, Button, Modal, Input, message} from 'antd';
 import {SwapOutlined} from '@ant-design/icons';
-import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js';
+import PayPalIntegration from "../../utils/paypal"
+import axios from "axios";
 
 function Index() {
     const [HKDAlgoPrice, setHKDAlgoPrice] = useState(2.345671);
@@ -14,9 +15,17 @@ function Index() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModal2Open, setIsModal2Open] = useState(false);
     const [messageApi, contextHolder] = message.useMessage();
+    // const childRef = useRef();
+    const childRef = React.createRef();
 
     useEffect(() => {
+        axios({
+            method: 'get',
+            url: "",
 
+        }).then(res => {
+
+        })
     })
 
     const inputAlgoAmt = (e: number) => {
@@ -38,7 +47,8 @@ function Index() {
 
     const confirmTrans = () => {
         // verify address format
-        setIsModal2Open(true)
+        // @ts-ignore
+        childRef.current.setIsShow(true)
     }
 
     const clickBuyAlgoBtn = () => {
@@ -52,6 +62,7 @@ function Index() {
         }
     }
 
+    // @ts-ignore
     return (
         <div>
             <Header/>
@@ -101,21 +112,9 @@ function Index() {
                 <h4>Please input the receiving address:</h4>
                 <Input onChange={e => inputReceiverAddress(e)}></Input>
             </Modal>
-            <Modal title={<h2>Pay with Paypal</h2>} open={isModal2Open} onCancel={() => {
-                setIsModal2Open(false)
-            }} centered={true} footer={null}>
-                <PayPalScriptProvider options={{"client-id": "test"}}>
-                    <PayPalButtons onApprove={(data, actions) => {
-                        // @ts-ignore
-                        return actions.order.capture().then((details) => {
-                            // @ts-ignore
-                            const name = details.payer.name.given_name;
-                            alert(`Transaction completed by ${name}`);
-                        });
-                    }}></PayPalButtons>
-                </PayPalScriptProvider>
 
-            </Modal>
+            <PayPalIntegration HKDAmount={2} onRef={childRef}></PayPalIntegration>
+
             <Footer/>
         </div>
     )

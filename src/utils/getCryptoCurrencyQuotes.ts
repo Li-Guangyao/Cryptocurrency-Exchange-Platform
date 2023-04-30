@@ -16,4 +16,8 @@ export default class GetCryptoCurrencyQuotes {
             }
         )
     }
+
+    getAlgoQuote(chain: string) {
+
+    }
 }
