@@ -46,7 +46,7 @@ function Header() {
     const connectAlgoSigner = async () => {
         // lgy-浏览器装了ALgoSigner之后，会自动调取
         await window.algorand.connect();
-        getUserAccount();
+        await getUserAccount();
     };
 
     const getUserAccount = async () => {
@@ -66,7 +66,7 @@ function Header() {
                 <div className={style['options']}>
                     {
                         NavItems.map((navItem, i) => {
-                            let className = path == navItem.path ? style['option'] + " " + style['option-selected'] : style['option'];
+                            let className = ((path == navItem.path) || (path == "/" && navItem.path == "/buy")) ? style['option'] + " " + style['option-selected'] : style['option'];
                             return <div className={className} onClick={() => {
                                 navigate(navItem.path)
                             }}>{navItem.name}

@@ -1,23 +1,16 @@
 import axios from 'axios'
 
-export default class GetCryptoCurrencyQuotes {
-    baseURL: string = process.env.QuoteBaseURL as string
-    path: string = process.env.QuotePath as string
-    key: string = process.env.RequestKey as string
+type cryptoSymbolList = "ALGOUSDT" | "BTCUSDT"
 
-    constructor() {
-    }
-
-    getETHQuote(chain: string) {
-        const requestURL = this.baseURL + this.path + "?slug=" + chain
-
-        axios.get(requestURL).then(res => {
-                console.log(res)
-            }
-        )
-    }
-
-    getAlgoQuote(chain: string) {
-
+class GetCryptoQuote {
+    static async getQuote(cryptoSymbol: cryptoSymbolList) {
+        const requestURL = "https://api4.binance.com/api/v3/ticker/24hr?symbol=" + cryptoSymbol
+        return axios.get(requestURL).then(res => {
+            return res.data
+        }).catch(err => {
+            return err
+        });
     }
 }
+
+export default GetCryptoQuote

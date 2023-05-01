@@ -1,10 +1,12 @@
 import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js";
-import {Modal} from 'antd'
+import {Modal, Button, message, Space} from 'antd'
 import React, {useState, useImperativeHandle} from "react";
 import {Paypal_Client_ID} from "../env.development";
+import AlgoUtils from "./AlgoUtils";
 
 interface PayPalIntegrationProps {
     HKDAmount: number,
+    actionsAfterPayment: Function,
     onRef: any
 }
 
@@ -17,6 +19,7 @@ const options = {
 
 const PayPalIntegration: React.FC<PayPalIntegrationProps> = (props: PayPalIntegrationProps) => {
     const [isShow, setIsShow] = useState(false)
+    const [messageApi, contextHolder] = message.useMessage();
 
     useImperativeHandle(props.onRef, () => {
         return {setIsShow}
@@ -26,7 +29,7 @@ const PayPalIntegration: React.FC<PayPalIntegrationProps> = (props: PayPalIntegr
         <Modal title={<h2>Pay with Paypal</h2>} open={isShow} onCancel={() => {
             setIsShow(false)
         }} centered={true} footer={null}>
-
+            {contextHolder}
             <PayPalScriptProvider options={options}>
                 <PayPalButtons
                     createOrder={(data, actions) => {
@@ -44,9 +47,14 @@ const PayPalIntegration: React.FC<PayPalIntegrationProps> = (props: PayPalIntegr
                     onApprove={(data, actions) => {
                         // @ts-ignore
                         return actions.order.capture().then((details) => {
-                            // @ts-ignore
-                            const name = details.payer.name.given_name;
-                            alert(`Transaction completed by ${name}`);
+                            const name = details?.payer?.name?.given_name;
+                            messageApi.open({
+                                type: 'success',
+                                content: 'success',
+                            }).then(r => {
+                                props.actionsAfterPayment();
+                            });
+                            setIsShow(false);
                         });
                     }}>
                 </PayPalButtons>
