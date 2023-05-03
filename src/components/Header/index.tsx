@@ -3,7 +3,6 @@
 import React, {useEffect, useRef, useState} from "react";
 
 import style from "./index.module.css";
-import {ethers} from "ethers";
 import {useLocation, useNavigate} from "react-router-dom";
 
 // import algosdk from 'algosdk';
@@ -21,25 +20,25 @@ function Header() {
 
     const navigate = useNavigate();
 
-    const ConnectWallet = async () => {
-        let signer = null;
-
-        let provider;
-        if (window.ethereum == null) {
-            console.log("MetaMask not installed; using read-only defaults");
-            provider = ethers.getDefaultProvider("");
-        } else {
-            // Connect to the MetaMask EIP-1193 object. This is a standard
-            // protocol that allows Ethers access to make all read-only
-            // requests through MetaMask.
-            provider = new ethers.BrowserProvider(window.ethereum);
-
-            // It also provides an opportunity to request access to write
-            // operations, which will be performed by the private key
-            // that MetaMask manages for the user.
-            signer = await provider.getSigner();
-        }
-    };
+    // const ConnectWallet = async () => {
+    //     let signer = null;
+    //
+    //     let provider;
+    //     if (window.ethereum == null) {
+    //         console.log("MetaMask not installed; using read-only defaults");
+    //         provider = ethers.getDefaultProvider("");
+    //     } else {
+    //         // Connect to the MetaMask EIP-1193 object. This is a standard
+    //         // protocol that allows Ethers access to make all read-only
+    //         // requests through MetaMask.
+    //         provider = new ethers.BrowserProvider(window.ethereum);
+    //
+    //         // It also provides an opportunity to request access to write
+    //         // operations, which will be performed by the private key
+    //         // that MetaMask manages for the user.
+    //         signer = await provider.getSigner();
+    //     }
+    // };
 
     let userAccount = useRef();
 

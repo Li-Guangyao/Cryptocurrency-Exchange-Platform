@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-type cryptoSymbolList = "ALGOUSDT" | "BTCUSDT"
+type cryptoSymbolList = "ALGOUSDT" | "BTCUSDT" | "ALGOETH" | "ALGOBTC"
 
 class GetCryptoQuote {
     static async getQuote(cryptoSymbol: cryptoSymbolList) {

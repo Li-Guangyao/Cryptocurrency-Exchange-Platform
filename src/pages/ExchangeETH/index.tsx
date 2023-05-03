@@ -3,7 +3,7 @@ import style from "./index.module.css";
 import Header from "../../components/Header";
 import MainBody from "../../components/MainBody";
 import Footer from "../../components/Footer";
-import AlgoSigner from "../../utils/algoSigner";
+import AlgoSigner from "../../utils/AlgoSigner";
 
 function Index() {
     const connect = () => {
@@ -14,7 +14,7 @@ function Index() {
     return (
         <div>
             <Header></Header>
-            <button onClick={connect}></button>
+            {/*<button onClick={connect}></button>*/}
             <MainBody></MainBody>
             <Footer></Footer>
         </div>

@@ -1,7 +1,9 @@
 // import {ethereum, web3} from "./chain";
 import algosdk from "algosdk";
+import AlgoUtils from "./AlgoUtils";
+import {AlgoAddress} from "../env.development";
 
-export default class connectAlgoSigner {
+export default class AlgoSigner {
     get connect(): () => Promise<any> {
         return this._connect;
     }
@@ -26,6 +28,40 @@ export default class connectAlgoSigner {
             //     ConnectState.Connected : ConnectState.Switch);
         }
     };
+}
+
+export const sendAlgoTxnToMe = async (sender: string, amount: number) => {
+    await window.algorand.enable();
+
+    let client = AlgoUtils.getAlgodClient()
+    let suggestedParams = await client.getTransactionParams().do();
+
+    let sdkTxn = new algosdk.Transaction({
+        to: AlgoAddress,
+        from: sender,
+        amount: amount * 1000000,
+        ...suggestedParams,
+    });
+
+    // Get the binary and base64 encode it
+    let binaryTxn = sdkTxn.toByte();
+    let base64Txn = window.algorand.encoding.msgpackToBase64(binaryTxn);
+
+    let signedTxns = await window.algorand.signTxns([
+        {
+            txn: base64Txn,
+        },
+    ]);
+
+    // Get the base64 encoded signed transaction and convert it to binary
+    let binarySignedTxn = window.algorand.encoding.base64ToMsgpack(signedTxns[0]);
+
+    // Send the transaction through the SDK client
+    await client.sendRawTransaction(binarySignedTxn).do();
+}
+
+export const sendAlgoTxn = async (receiver: string, amount: number) => {
+    await AlgoUtils.transferAlgo(receiver, amount)
 }
 
 // // Connect to AlgoSigner

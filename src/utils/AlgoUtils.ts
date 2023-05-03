@@ -16,6 +16,10 @@ class AlgoUtils {
         'X-API-Key': this.algodToken
     }, this.algodServer, this.algodPort);
 
+    static getAlgodClient() {
+        return this.algodClient;
+    }
+
     static async transferAlgo(receiver: string, amount: number) {
         console.log("transfer " + amount + " Algo to " + receiver)
         try {

@@ -5,7 +5,7 @@
 }
 .container .central-area {
   width: 55vw;
-  height: 65vh;
+  height: 60vh;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,7 +53,7 @@
 }
 .container .central-area .exchange-block .left .connect-wallet,
 .container .central-area .exchange-block .right .connect-wallet {
-  flex: 1 0 30%;
+  flex: 1 0 25%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -75,6 +75,19 @@
   flex-grow: 1;
   overflow: hidden;
   padding: 2px;
+  margin: 5px 0;
+}
+.container .central-area .exchange-block .left .connect-wallet .display-address,
+.container .central-area .exchange-block .right .connect-wallet .display-address {
+  display: flex;
+  align-items: center;
+}
+.container .central-area .exchange-block .left .connect-wallet .display-address .address,
+.container .central-area .exchange-block .right .connect-wallet .display-address .address {
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #4f4f4f;
 }
 .container .central-area .exchange-block .left .asset,
 .container .central-area .exchange-block .right .asset {
@@ -83,26 +96,17 @@
   display: flex;
   flex-direction: column;
 }
-.container .central-area .exchange-block .left .asset .amount-input-wrapper,
-.container .central-area .exchange-block .right .asset .amount-input-wrapper {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.container .central-area .exchange-block .left .asset .tip,
+.container .central-area .exchange-block .right .asset .tip {
+  margin: 5px 0;
 }
-.container .central-area .exchange-block .left .asset .amount-input-wrapper .amount-input,
-.container .central-area .exchange-block .right .asset .amount-input-wrapper .amount-input {
+.container .central-area .exchange-block .left .asset .input,
+.container .central-area .exchange-block .right .asset .input {
   width: 100%;
-  height: 100%;
-}
-.container .central-area .exchange-block .left .balance,
-.container .central-area .exchange-block .right .balance {
-  flex: 1;
 }
 .container .central-area .exchange-block .bottom-area {
   width: 100%;
-  flex: 1 0 25%;
+  flex: 1 0 30%;
 }
 .container .central-area .exchange-block .bottom-area .divide-bar {
   width: 100%;
@@ -135,3 +139,4 @@
   color: white;
   font-weight: bold;
 }
+/*# sourceMappingURL=index.module.css.map */
