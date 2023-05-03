@@ -53,7 +53,7 @@
 }
 .container .central-area .exchange-block .left .connect-wallet,
 .container .central-area .exchange-block .right .connect-wallet {
-  flex: 1;
+  flex: 1 0 30%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -76,58 +76,42 @@
   overflow: hidden;
   padding: 2px;
 }
-.container .central-area .exchange-block .left .select-asset,
-.container .central-area .exchange-block .right .select-asset {
-  flex: 1;
+.container .central-area .exchange-block .left .asset,
+.container .central-area .exchange-block .right .asset {
+  flex: 1 0 40%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.container .central-area .exchange-block .left .input-amount,
-.container .central-area .exchange-block .right .input-amount {
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 15px 0;
-}
-.container .central-area .exchange-block .left .input-amount .input-amount-tip,
-.container .central-area .exchange-block .right .input-amount .input-amount-tip {
-  flex: 1;
-}
-.container .central-area .exchange-block .left .input-amount .input-amount-input-wrapper,
-.container .central-area .exchange-block .right .input-amount .input-amount-input-wrapper {
+.container .central-area .exchange-block .left .asset .amount-input-wrapper,
+.container .central-area .exchange-block .right .asset .amount-input-wrapper {
   width: 100%;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container .central-area .exchange-block .left .input-amount .input-amount-input-wrapper .input-amount-input,
-.container .central-area .exchange-block .right .input-amount .input-amount-input-wrapper .input-amount-input {
+.container .central-area .exchange-block .left .asset .amount-input-wrapper .amount-input,
+.container .central-area .exchange-block .right .asset .amount-input-wrapper .amount-input {
   width: 100%;
   height: 100%;
 }
-.container .central-area .exchange-block .left .input-amount .input-amount-account-balance,
-.container .central-area .exchange-block .right .input-amount .input-amount-account-balance {
+.container .central-area .exchange-block .left .balance,
+.container .central-area .exchange-block .right .balance {
   flex: 1;
 }
-.container .central-area .exchange-block .left .bottom-area,
-.container .central-area .exchange-block .right .bottom-area {
+.container .central-area .exchange-block .bottom-area {
   width: 100%;
-  flex: 1;
+  flex: 1 0 25%;
 }
-.container .central-area .exchange-block .left .bottom-area .divide-bar,
-.container .central-area .exchange-block .right .bottom-area .divide-bar {
+.container .central-area .exchange-block .bottom-area .divide-bar {
   width: 100%;
   height: 5px;
   background-color: #3078a1;
   border-radius: 3px;
 }
-.container .central-area .exchange-block .left .bottom-area .exchange-fee,
-.container .central-area .exchange-block .right .bottom-area .exchange-fee,
-.container .central-area .exchange-block .left .bottom-area .gas-fee,
-.container .central-area .exchange-block .right .bottom-area .gas-fee {
+.container .central-area .exchange-block .bottom-area .exchange-fee,
+.container .central-area .exchange-block .bottom-area .gas-fee {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -151,4 +135,3 @@
   color: white;
   font-weight: bold;
 }
-/*# sourceMappingURL=index.module.css.map */

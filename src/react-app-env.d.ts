@@ -2,4 +2,5 @@
 interface Window {
     algorand: any;
     ethereum: any;
+    AlgoSigner: any;
 }

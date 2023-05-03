@@ -18,9 +18,14 @@
     justify-content: left;
 
     .logo {
-      font-size: xx-large;
+      font-size: 100%;
+      height: 80%;
       color: white;
       margin-left: 2vw;
+
+      display: flex;
+      justify-self: center;
+      align-items: center;
 
       cursor: pointer;
     }
@@ -37,10 +42,12 @@
         text-align: center;
 
         margin: 0 0.3vw;
-        padding: 8px 1.5vw;
-        /*width: 48px;*/
+        padding: 8px 1vw;
+        width: fit-content;
         height: var(--nav-height);
         line-height: var(--nav-height);
+
+        max-height: 80%;
 
         font-family: main;
         font-weight: bolder;
@@ -58,7 +65,7 @@
 
       .option-selected {
         color: white;
-        background-color: #e2b28e;
+        background-color: rgb(255, 212, 159);
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
       }
 
@@ -106,6 +113,7 @@
           width: 20%;
           opacity: 0;
         }
+
         100% {
           width: 100%;
           opacity: 1;

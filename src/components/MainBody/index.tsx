@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import style from "./index.module.css";
 
-import {Select, Button, Input} from "antd";
+import { Select, Button, Input } from "antd";
 import "antd/dist/reset.css";
 
 import connectMetaMask from "../../utils/connectMetaMask";
-import connectAlgoSigner from "../../utils/connectAlgoSigner";
+import AlgoSigner from "../../utils/algoSigner";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 // enum Nettype {
 //     Testnet,
@@ -13,84 +14,83 @@ import connectAlgoSigner from "../../utils/connectAlgoSigner";
 //     Betanet,
 // }
 
-const chainOptions = [{value: "0", label: "Ethereum"},
-    {value: "1", label: "Algorand"}]
+const chainOptions = [
+    { value: "0", label: "Ethereum" },
+    { value: "1", label: "Algorand" },
+];
 
-const currencyOptions = [{value: "Goerli", label: "Goerli"},
-    {value: "Algo", label: "Algo"}]
+const currencyOptions = [
+    { value: "Goerli", label: "Goerli" },
+    { value: "Algo", label: "Algo" },
+];
 
 export enum ConnectState {
-    Unconnected, Connected
+    Unconnected,
+    Connected,
 }
 
 const changeNumber = (e: string | number) => {
-    return (Number(e) + 1) % 2
-}
+    return (Number(e) + 1) % 2;
+};
 
 export default function MainBody() {
-    const [sender, setSender] = useState("")
-    const [receiver, setReceiver] = useState("")
-    const [showInputForReceiver, setShowInputForReceiver] = useState(false)
-    const [exchangeAmount, setExchangeAmount] = useState(0) // from sender
+    const [sender, setSender] = useState("");
+    const [receiver, setReceiver] = useState("");
+    const [showInputForReceiver, setShowInputForReceiver] = useState(false);
+    const [exchangeAmount, setExchangeAmount] = useState(0); // from sender
+    const [currSelected, setCurrSelected] = useState(0);
 
-    const launchTrans = () => {
-
-    };
-
-    const [currSelected, setCurrSelected] = useState(0)
+    const launchTrans = () => {};
 
     const changeChain = (e: any, pos: string) => {
-        if (pos == 'left') {
-            setCurrSelected(Number(e))
-        } else if (pos == 'right') {
-            setCurrSelected(changeNumber(e))
+        if (pos == "left") {
+            setCurrSelected(Number(e));
+        } else if (pos == "right") {
+            setCurrSelected(changeNumber(e));
         }
-    }
+    };
 
     const leftConnectWallet = () => {
         if (currSelected == 0) {
-            let metaMask = new connectMetaMask()
-            metaMask.connect().then(r =>
-                console.log(r)
-            )
+            let metaMask = new connectMetaMask();
+            metaMask.connect().then((r) => console.log(r));
         } else if (currSelected == 1) {
-            let algoSigner = new connectAlgoSigner();
-            algoSigner.connect().then(r => {
-                setSender(r)
+            let algoSigner = new AlgoSigner();
+            algoSigner.connect().then((r) => {
+                setSender(r);
+                console.log(r);
             });
         }
-    }
+    };
 
     const rightConnectWallet = () => {
         if (currSelected == 1) {
-            let metaMask = new connectMetaMask()
-            metaMask.connect().then(r =>
-                console.log(r)
-            )
+            let metaMask = new connectMetaMask();
+            metaMask.connect().then((r) => console.log(r));
         } else if (currSelected == 0) {
-            let algoSigner = new connectAlgoSigner();
-            algoSigner.connect().then(r => {
-                setReceiver(r)
+            let algoSigner = new AlgoSigner();
+            algoSigner.connect().then((r) => {
+                setReceiver(r);
             });
         }
-    }
+    };
 
     const inputReceiver = (e: any) => {
-        let receiver = e.target.defaultValue
+        let receiver = e.target.defaultValue;
         // 需要校验地址的格式是否正确
-        setReceiver(receiver)
-    }
+        setReceiver(receiver);
+    };
 
     const inputExchangeAmount = (side: String, e: any) => {
-        console.log(e)
+        console.log(e);
         // 需要测试是否为数值格式
-        let amount = e.target.defaultValue
-        if (side == 'left') {
-            setExchangeAmount(amount)
+        let amount = e.target.defaultValue;
+        if (side == "left") {
+            setExchangeAmount(amount);
         } else {
-            setExchangeAmount(e.target.defaultValue)
+            setExchangeAmount(e.target.defaultValue);
         }
-    }
+    };
 
     return (
         <div className={style["container"]}>
@@ -100,26 +100,37 @@ export default function MainBody() {
                         <div className={style["title"]}>Source</div>
 
                         <div className={style["connect-wallet"]}>
-                            <Select className={style["connect-wallet-select"]}
-                                    defaultValue={chainOptions[currSelected].label}
-                                    value={chainOptions[currSelected].label}
-                                    onSelect={(e) => {
-                                        changeChain(e, "left")
-                                    }}
-                                    options={chainOptions}
+                            <Select
+                                className={style["connect-wallet-select"]}
+                                defaultValue={chainOptions[currSelected].label}
+                                value={chainOptions[currSelected].label}
+                                onSelect={(e) => {
+                                    changeChain(e, "left");
+                                }}
+                                options={chainOptions}
                             />
 
                             <div className={style["margin"]}></div>
-                            <Button className={style["connect-wallet-btn"]} onClick={leftConnectWallet}>
+                            <Button
+                                className={style["connect-wallet-btn"]}
+                                onClick={leftConnectWallet}
+                            >
                                 CONNECT WALLET
                             </Button>
+                            <div className={style["display-address"]}>
+                                <div className={style["address"]}>{sender}</div>
+                                <CloseCircleOutlined
+                                    className={style["clear-icon"]}
+                                    onClick={() => setSender("")}
+                                />
+                            </div>
+                            {/* <Input allowClear={true} value={sender}></Input> */}
                         </div>
 
                         <div className={style["select-asset"]}>
                             <div className={style["select-aeest-tip"]}>
                                 Select Asset
                             </div>
-                            <div className={style["margin"]}></div>
 
                             <Select
                                 defaultValue={currencyOptions[currSelected]}
@@ -139,7 +150,7 @@ export default function MainBody() {
                                     className={style["input-amount-input"]}
                                     placeholder={"0.00"}
                                     onChange={(e) => {
-                                        inputExchangeAmount('left', e)
+                                        inputExchangeAmount("left", e);
                                     }}
                                 ></Input>
                             </div>
@@ -181,39 +192,67 @@ export default function MainBody() {
                     <div className={style["right"]}>
                         <div className={style["title"]}>Destination</div>
                         <div className={style["connect-wallet"]}>
-                            {showInputForReceiver ? <Input placeholder="Input Receiver Address" onInput={(e) => {
-                                    inputReceiver(e)
-                                }
-                                }/>
-
-                                : <Select
-                                    defaultValue={chainOptions[changeNumber(currSelected)]}
-                                    value={chainOptions[changeNumber(currSelected)]}
+                            {showInputForReceiver ? (
+                                <Input
+                                    placeholder="Input Receiver Address"
+                                    onInput={(e) => {
+                                        inputReceiver(e);
+                                    }}
+                                />
+                            ) : (
+                                <Select
+                                    defaultValue={
+                                        chainOptions[changeNumber(currSelected)]
+                                    }
+                                    value={
+                                        chainOptions[changeNumber(currSelected)]
+                                    }
                                     onSelect={(e) => {
-                                        changeChain(e, "right")
+                                        changeChain(e, "right");
                                     }}
                                     options={chainOptions}
                                 />
-                            }
+                            )}
                             <div className={style["margin"]}></div>
 
-                            <div className={style["connect-wallet-btn-wrapper"]}>
-                                {showInputForReceiver ? <Button className={style["connect-wallet-btn"]}
-                                                                onClick={() => {
-                                                                    setShowInputForReceiver(!showInputForReceiver)
-                                                                }}>
-                                        Cancel address </Button>
-                                    :
+                            <div
+                                className={style["connect-wallet-btn-wrapper"]}
+                            >
+                                {showInputForReceiver ? (
+                                    <Button
+                                        className={style["connect-wallet-btn"]}
+                                        onClick={() => {
+                                            setShowInputForReceiver(
+                                                !showInputForReceiver
+                                            );
+                                        }}
+                                    >
+                                        Cancel address{" "}
+                                    </Button>
+                                ) : (
                                     <>
-                                        <Button className={style["connect-wallet-btn"]} onClick={rightConnectWallet}>
+                                        <Button
+                                            className={
+                                                style["connect-wallet-btn"]
+                                            }
+                                            onClick={rightConnectWallet}
+                                        >
                                             CONNECT WALLET
                                         </Button>
-                                        <Button className={style["connect-wallet-btn"]} onClick={() => {
-                                            setShowInputForReceiver(!showInputForReceiver)
-                                        }}>
+                                        <Button
+                                            className={
+                                                style["connect-wallet-btn"]
+                                            }
+                                            onClick={() => {
+                                                setShowInputForReceiver(
+                                                    !showInputForReceiver
+                                                );
+                                            }}
+                                        >
                                             ENTER ADDRESS
                                         </Button>
-                                    </>}
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -223,8 +262,12 @@ export default function MainBody() {
                             </div>
                             <div className={style["margin"]}></div>
                             <Select
-                                defaultValue={currencyOptions[changeNumber(currSelected)]}
-                                value={currencyOptions[changeNumber(currSelected)]}
+                                defaultValue={
+                                    currencyOptions[changeNumber(currSelected)]
+                                }
+                                value={
+                                    currencyOptions[changeNumber(currSelected)]
+                                }
                                 options={currencyOptions}
                             />
                         </div>
@@ -240,10 +283,9 @@ export default function MainBody() {
                                     className={style["input-amount-input"]}
                                     placeholder={"0.00"}
                                     onInput={(e) => {
-                                        inputExchangeAmount('right', e)
+                                        inputExchangeAmount("right", e);
                                     }}
-                                >
-                                </Input>
+                                ></Input>
                             </div>
                             <div
                                 className={
@@ -274,7 +316,5 @@ export default function MainBody() {
                 </Button>
             </div>
         </div>
-    )
-        ;
+    );
 }
-

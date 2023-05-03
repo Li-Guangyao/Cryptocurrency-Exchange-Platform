@@ -1,5 +1,5 @@
 // import {ethereum, web3} from "./chain";
-import algosdk from 'algosdk'
+import algosdk from "algosdk";
 
 export default class connectAlgoSigner {
     get connect(): () => Promise<any> {
@@ -7,8 +7,10 @@ export default class connectAlgoSigner {
     }
 
     private _connect = async () => {
-        console.log("Connect", 'algoSigner')
-        if (!window.algorand) window.location.href = "https://chrome.google.com/webstore/detail/algosigner/kmmolakhbgdlpkjkcjkebenjheonagdm";
+        console.log("Connect", "algoSigner");
+        if (!window.algorand && !window.AlgoSigner)
+            window.location.href =
+                "https://chrome.google.com/webstore/detail/algosigner/kmmolakhbgdlpkjkcjkebenjheonagdm";
         else {
             // const accounts: string[] = await ethereum.request({method: 'eth_requestAccounts'});
             // const chainId: number = await web3.eth.getChainId();
@@ -19,12 +21,11 @@ export default class connectAlgoSigner {
 
             return algoConnectiion.accounts[0];
 
-
             // setAddress(accounts[0]);
             // setState(chainId == ChainId ?
             //     ConnectState.Connected : ConnectState.Switch);
         }
-    }
+    };
 }
 
 // // Connect to AlgoSigner

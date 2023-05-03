@@ -16,9 +16,13 @@
   justify-content: left;
 }
 .container .left .logo {
-  font-size: xx-large;
+  font-size: 100%;
+  height: 80%;
   color: white;
   margin-left: 2vw;
+  display: flex;
+  justify-self: center;
+  align-items: center;
   cursor: pointer;
 }
 .container .left .options {
@@ -31,10 +35,11 @@
 .container .left .options .option {
   text-align: center;
   margin: 0 0.3vw;
-  padding: 8px 1.5vw;
-  /*width: 48px;*/
+  padding: 8px 1vw;
+  width: fit-content;
   height: var(--nav-height);
   line-height: var(--nav-height);
+  max-height: 80%;
   font-family: main;
   font-weight: bolder;
   color: #b4b4b4;
@@ -48,7 +53,7 @@
 }
 .container .left .options .option-selected {
   color: white;
-  background-color: #e2b28e;
+  background-color: #ffd49f;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px;
 }
 .container .left .options .option::before {
@@ -118,4 +123,3 @@
   font-weight: bold;
   color: #525252;
 }
-/*# sourceMappingURL=index.module.css.map */
