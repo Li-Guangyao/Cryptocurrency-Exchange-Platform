@@ -1,6 +1,9 @@
-import {ConnectState} from "../components/MainBody";
+import {ConnectState} from "../components/MainBodyETH";
 import {ConnectButton} from "@rainbow-me/rainbowkit";
 import {Button} from 'antd'
+import {ETHAddress, ETHSecretKey} from "../env.development";
+import {ethers} from "ethers";
+import Web3 from 'web3'
 
 type Params = {
     state: ConnectState
@@ -60,107 +63,61 @@ export const formatBalance = (rawBalance: string) => {
     return balance
 }
 
-export const sendETHTxnToMe = (sender: string, amount: number) => {
-    
+export const sendETHTxnToMe = async (sender: string, amount: number) => {
+    const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+    });
+
+    console.log(accounts)
+
+    // const provider = new ethers.providers.Web3Provider(window.ethereum)
+    // const block = await provider.getBlock('latest')
+
+    await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [
+            {
+                from: accounts[0], // The user's active address.
+                to: "0x7EDa70FB79987234919AD0f6b50eA9F03DcD61e2", // Required except during contract publications.
+                value: (amount * 1000000000000000000).toString(16), // Only required to send ether to the recipient from the initiating external account.
+                gasPrice: '0x09184e72a000', // Customizable by the user during MetaMask confirmation.
+                gas: '0x2710', // Customizable by the user during MetaMask confirmation.
+
+                // to: '0x2f318C334780961FB129D2a6c30D0763d9a5C970', // Required except during contract publications.
+                // value: '0x29a2241af62c0000', // Only required to send ether to the recipient from the initiating external account.
+                // gasPrice: '0x09184e72a000', // Customizable by the user during MetaMask confirmation.
+                // gas: '0x2710', // Customizable by the user during MetaMask confirmation.
+            },
+        ],
+    }).then((txHash: any) => console.log(txHash)).catch((error: any) => console.error(error));
 }
 
-export const sendETHTxn = (receiver: string, amount: number) => {
+export const sendETHTxn = async (receiver: string, amount: number) => {
+    let privatekey = ETHSecretKey
+    let wallet = new ethers.Wallet(privatekey);
+
+    console.log('Using wallet address ' + wallet.address);
+
+    let transaction = {
+        to: receiver,
+        value: ethers.utils.parseEther(String(amount)),
+        gasLimit: '21000',
+        maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei'),
+        maxFeePerGas: ethers.utils.parseUnits('20', 'gwei'),
+        nonce: 1,
+        type: 2,
+        chainId: 5
+    };
+
+    // @ts-ignore
+    let rawTransaction = await wallet.signTransaction(transaction).then(ethers.utils.serializeTransaction(transaction));
+    console.log('Raw txhash string ' + rawTransaction);
+
+    // pass the raw transaction hash to the "eth_sendRawTransaction" endpoint
+    let gethProxy = await fetch(`https://api-goerli.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=${rawTransaction}&apikey=BZSC4XKRTK1NCEB8GQ7XGHFX625A4AA918`);
+    let response = await gethProxy.json();
+
+    // print the API response
+    console.log(response);
 
 }
-
-
-// export const ConnectBtn = () => {
-//     return (
-//         <ConnectButton.Custom>
-//             {({
-//                   account,
-//                   chain,
-//                   openAccountModal,
-//                   openChainModal,
-//                   openConnectModal,
-//                   authenticationStatus,
-//                   mounted,
-//               }) => {
-//                 // Note: If your app doesn't use authentication, you
-//                 // can remove all 'authenticationStatus' checks
-//                 const ready = mounted && authenticationStatus !== 'loading';
-//                 const connected =
-//                     ready &&
-//                     account &&
-//                     chain &&
-//                     (!authenticationStatus ||
-//                         authenticationStatus === 'authenticated');
-//
-//                 return (
-//                     <div
-//                         {...(!ready && {
-//                             'aria-hidden': true,
-//                             'style': {
-//                                 opacity: 0,
-//                                 pointerEvents: 'none',
-//                                 userSelect: 'none',
-//                             },
-//                         })}
-//                     >
-//                         {(() => {
-//                             if (!connected) {
-//                                 return (
-//                                     <button onClick={openConnectModal} type="button">
-//                                         Connect Wallet
-//                                     </button>
-//                                 );
-//                             }
-//
-//                             if (chain.unsupported) {
-//                                 return (
-//                                     <button onClick={openChainModal} type="button">
-//                                         Wrong network
-//                                     </button>
-//                                 );
-//                             }
-//
-//                             return (
-//                                 <div style={{display: 'flex', gap: 12}}>
-//                                     <button
-//                                         onClick={openChainModal}
-//                                         style={{display: 'flex', alignItems: 'center'}}
-//                                         type="button"
-//                                     >
-//                                         {chain.hasIcon && (
-//                                             <div
-//                                                 style={{
-//                                                     background: chain.iconBackground,
-//                                                     width: 12,
-//                                                     height: 12,
-//                                                     borderRadius: 999,
-//                                                     overflow: 'hidden',
-//                                                     marginRight: 4,
-//                                                 }}
-//                                             >
-//                                                 {chain.iconUrl && (
-//                                                     <img
-//                                                         alt={chain.name ?? 'Chain icon'}
-//                                                         src={chain.iconUrl}
-//                                                         style={{width: 12, height: 12}}
-//                                                     />
-//                                                 )}
-//                                             </div>
-//                                         )}
-//                                         {chain.name}
-//                                     </button>
-//
-//                                     <button onClick={openAccountModal} type="button">
-//                                         {account.displayName}
-//                                         {account.displayBalance
-//                                             ? ` (${account.displayBalance})`
-//                                             : ''}
-//                                     </button>
-//                                 </div>
-//                             );
-//                         })()}
-//                     </div>
-//                 );
-//             }}
-//         </ConnectButton.Custom>
-//     )
-// }

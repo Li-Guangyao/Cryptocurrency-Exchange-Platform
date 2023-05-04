@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./index.module.css";
 import Header from "../../components/Header";
-import MainBody from "../../components/MainBody";
+import MainBody from "../../components/MainBodyBTC";
 import Footer from "../../components/Footer";
 
 function Index() {
