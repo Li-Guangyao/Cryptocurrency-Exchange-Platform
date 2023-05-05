@@ -77,7 +77,7 @@ function Index() {
     }
 
     const transferAlgo = () => {
-
+        setIsModalOpen(false)
         AlgoUtils.transferAlgo(receiverAddress, algoAmt).then(r => {
             messageApi.open({
                 type: 'success',

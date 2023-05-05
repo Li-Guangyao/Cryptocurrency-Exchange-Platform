@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import MainBody from "../../components/MainBodyETH";
 import Footer from "../../components/Footer";
 import {sendETHTxnToMe, sendETHTxn} from "../../utils/ConnectETH";
+import ganache from "ganache"
 import web3 from 'web3'
 import {ethers} from 'ethers'
 
@@ -11,9 +12,11 @@ function Index() {
     const connect = async () => {
         // sendETHTxnToMe("0x7EDa70FB79987234919AD0f6b50eA9F03DcD61e2", 0.1)
         // const provider = new ethers.providers.Web3Provider(window.ethereum)
-        sendETHTxn("0x7EDa70FB79987234919AD0f6b50eA9F03DcD61e2", 0.1)
+        sendETHTxn("0x3eCec3D31715f8Fa88D2359359ceaE07142C7487", 0.15)
         // const block = await provider.getBlock('latest')
         // console.log(block.gasLimit)
+
+
     };
 
     return (

@@ -1,9 +1,7 @@
 import {ConnectState} from "../components/MainBodyETH";
-import {ConnectButton} from "@rainbow-me/rainbowkit";
-import {Button} from 'antd'
 import {ETHAddress, ETHSecretKey} from "../env.development";
 import {ethers} from "ethers";
-import Web3 from 'web3'
+import ganache from "ganache";
 
 type Params = {
     state: ConnectState
@@ -93,31 +91,62 @@ export const sendETHTxnToMe = async (sender: string, amount: number) => {
 }
 
 export const sendETHTxn = async (receiver: string, amount: number) => {
-    let privatekey = ETHSecretKey
-    let wallet = new ethers.Wallet(privatekey);
+    // let privatekey = ETHSecretKey
+    // let wallet = new ethers.Wallet(privatekey);
+    //
+    // console.log('Using wallet address ' + wallet.address);
+    //
+    // let transaction = {
+    //     to: receiver,
+    //     value: ethers.utils.parseEther(String(amount)),
+    //     gasLimit: '21000',
+    //     maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei'),
+    //     maxFeePerGas: ethers.utils.parseUnits('2000', 'gwei'),
+    //     nonce: 3,
+    //     type: 2,
+    //     chainId: 5
+    // };
+    //
+    // // @ts-ignore
+    // let rawTransaction = await wallet.signTransaction(transaction).then(ethers.utils.serializeTransaction(transaction));
+    // console.log('Raw txhash string ' + rawTransaction);
+    //
+    // // pass the raw transaction hash to the "eth_sendRawTransaction" endpoint
+    // let gethProxy = await fetch(`https://api-goerli.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=${rawTransaction}&apikey=BZSC4XKRTK1NCEB8GQ7XGHFX625A4AA918`);
+    // let response = await gethProxy.json();
+    //
+    // // print the API response
+    // console.log(response);
 
-    console.log('Using wallet address ' + wallet.address);
 
-    let transaction = {
-        to: receiver,
-        value: ethers.utils.parseEther(String(amount)),
-        gasLimit: '21000',
-        maxPriorityFeePerGas: ethers.utils.parseUnits('5', 'gwei'),
-        maxFeePerGas: ethers.utils.parseUnits('20', 'gwei'),
-        nonce: 1,
-        type: 2,
-        chainId: 5
-    };
+    // const ganache = require("ganache");
+    // const provider = ganache.provider({})
+    //
+    // // @ts-ignore
+    // const [from, to] = await provider.request({method: "eth_accounts", params: []});
+    // // console.log(res)
+    // //
+    // // const from = "0xE8424AdB56Bd76D342014D619F6C333151E0B949"
+    // // const to = "0xFDF31d7E6A1618B14431a35B62744D77BD32300a"
+    //
+    // const signedTx = await provider.request({
+    //     method: "eth_signTransaction",
+    //     params: [{from, to, gas: "0x5b8d80", maxFeePerGas: "0xffffffff"}]
+    // });
+    // const txHash = await provider.send("eth_sendRawTransaction", [signedTx]);
+    // console.log(txHash);
 
-    // @ts-ignore
-    let rawTransaction = await wallet.signTransaction(transaction).then(ethers.utils.serializeTransaction(transaction));
-    console.log('Raw txhash string ' + rawTransaction);
+    const Web3 = require('web3')
+    const web3 = new Web3('http://127.0.0.1:8545')
 
-    // pass the raw transaction hash to the "eth_sendRawTransaction" endpoint
-    let gethProxy = await fetch(`https://api-goerli.etherscan.io/api?module=proxy&action=eth_sendRawTransaction&hex=${rawTransaction}&apikey=BZSC4XKRTK1NCEB8GQ7XGHFX625A4AA918`);
-    let response = await gethProxy.json();
+    const account1 = '0xE8424AdB56Bd76D342014D619F6C333151E0B949'
+    const account2 = '0xFDF31d7E6A1618B14431a35B62744D77BD32300a'
 
-    // print the API response
-    console.log(response);
+    const tx = await web3.eth.sendTransaction({
+        from: account1,
+        to: account2,
+        value: web3.utils.toWei('1', 'ether')
+    })
 
+    console.log(tx)
 }

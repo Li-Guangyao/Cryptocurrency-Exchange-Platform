@@ -20,13 +20,13 @@ import GetCryptoQuote from "../../utils/getCryptoCurrencyQuotes";
 // }
 
 const chainOptions = [
-    {value: "0", label: "Algorand"},
-    {value: "1", label: "Bitcoin"},
+    {value: "0", label: "Bitcoin"},
+    {value: "1", label: "Algorand"},
 ];
 
 const currencyOptions = [
-    {value: "Algo", label: "Algo"},
     {value: "BTC", label: "BTC"},
+    {value: "Algo", label: "Algo"},
 ];
 
 export enum ConnectState {
@@ -91,10 +91,30 @@ export default function MainBody() {
     }
 
     const leftConnectWallet = () => {
-        let algoSigner = new AlgoSigner();
-        algoSigner.connect().then((r) => {
-            setSender(r);
-        });
+        if (currSelected == 0) {
+            // let metaMask = new MetaMask();
+            // metaMask.connect().then((r: any) => {
+            //     setSender(r.address);
+            //     setBalance(r.balance)
+            // });
+        } else if (currSelected == 1) {
+            let algoSigner = new AlgoSigner();
+            algoSigner.connect().then((r) => {
+                setSender(r);
+            });
+        }
+    };
+
+    const rightConnectWallet = () => {
+        if (currSelected == 1) {
+            // let metaMask = new MetaMask();
+            // metaMask.connect().then((r: any) => setReceiver(r));
+        } else if (currSelected == 0) {
+            let algoSigner = new AlgoSigner();
+            algoSigner.connect().then((r) => {
+                setReceiver(r);
+            });
+        }
     };
 
     const inputReceiver = (e: any) => {
@@ -123,18 +143,37 @@ export default function MainBody() {
 
     const inputExchangeAmount = (e: any) => {
         if (e < 0) return;
-
-        setReceivingAmount(Math.floor(e * rate * 1000000) / 1000000);
+        console.log(e);
+        if (currSelected == 0) {
+            setReceivingAmount(Math.floor((e / rate) * 1000000) / 1000000);
+        } else {
+            setReceivingAmount(Math.floor(e * rate * 1000000) / 1000000);
+        }
 
         setExFee(e * 0.01)
         setGasFee(e * 0.01)
     };
 
+    const inputReceivingAmount = (e: any) => {
+        if (currSelected == 0) {
+            setExchangeAmount(e * rate)
+        } else {
+            setExchangeAmount(e / rate)
+        }
+    }
+
     const launchTrans = () => {
         if (!sender || !receiver) return;
-        sendAlgoTxnToMe(sender, exchangeAmount).then(r => {
-        })
-        sendBTCTxn(receiver, receivingAmount)
+        if (currSelected == 0) {
+            sendAlgoTxnToMe(sender, exchangeAmount).then(r => {
+            })
+            sendBTCTxn(receiver, receivingAmount)
+
+        } else {
+            sendBTCTxnToMe(sender, exchangeAmount)
+            sendAlgoTxn(receiver, receivingAmount).then(r => {
+            })
+        }
     };
 
 
@@ -151,9 +190,9 @@ export default function MainBody() {
                                 className={style["connect-wallet-select"]}
                                 defaultValue={chainOptions[currSelected].label}
                                 value={chainOptions[currSelected].label}
-                                // onSelect={(e) => {
-                                //     changeChain(e, "left");
-                                // }}
+                                onSelect={(e) => {
+                                    changeChain(e, "left");
+                                }}
                                 options={chainOptions}
                             />
                             <div
@@ -246,9 +285,9 @@ export default function MainBody() {
                                 }
                                         value={chainOptions[changeNumber(currSelected)]
                                         }
-                                    // onSelect={(e) => {
-                                    //     changeChain(e, "right");
-                                    // }}
+                                        onSelect={(e) => {
+                                            changeChain(e, "right");
+                                        }}
                                         options={chainOptions}
                                 />
                             )}
@@ -265,10 +304,10 @@ export default function MainBody() {
                                     </Button>
                                 ) : (
                                     <>
-                                        {/*<Button className={style["connect-wallet-btn"]}*/}
-                                        {/*        onClick={rightConnectWallet}>*/}
-                                        {/*    CONNECT WALLET*/}
-                                        {/*</Button>*/}
+                                        <Button className={style["connect-wallet-btn"]}
+                                                onClick={rightConnectWallet}>
+                                            CONNECT WALLET
+                                        </Button>
                                         <Button className={style["connect-wallet-btn"]}
                                                 onClick={() => {
                                                     setShowInputForReceiver(
@@ -312,9 +351,9 @@ export default function MainBody() {
                                 placeholder={"0.00"}
                                 value={receivingAmount}
                                 readOnly={true}
-                                // onChange={(e) => {
-                                //     inputReceivingAmount(e);
-                                // }}
+                                onChange={(e) => {
+                                    inputReceivingAmount(e);
+                                }}
                             ></InputNumber>
 
                             <div

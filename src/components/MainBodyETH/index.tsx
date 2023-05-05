@@ -367,14 +367,14 @@ export default function MainBody() {
                         <div className={style["bottom-area"]}>
                             <div className={style["divide-bar"]}></div>
 
-                            <div className={style["gas-fee"]}>
-                                <div className={style["gas-fee-tip"]}>
-                                    XXXX Gas Fee
-                                </div>
-                                <div className={style["gas-fee-amount"]}>
-                                    xxx
-                                </div>
-                            </div>
+                            {/*<div className={style["gas-fee"]}>*/}
+                            {/*    <div className={style["gas-fee-tip"]}>*/}
+                            {/*        XXXX Gas Fee*/}
+                            {/*    </div>*/}
+                            {/*    <div className={style["gas-fee-amount"]}>*/}
+                            {/*        xxx*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                 </div>
